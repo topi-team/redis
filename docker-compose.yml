@@ -1,0 +1,11 @@
+# Docker Compose:
+#  * docs: https://docs.docker.com/compose/compose-file/
+#  * spec: https://github.com/compose-spec/compose-spec/blob/master/spec.md
+
+version: "3.8"
+services:
+  redis:
+    image: redis
+    restart: on-failure
+    ports:
+      - "6379:6379"
