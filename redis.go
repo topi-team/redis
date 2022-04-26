@@ -14,8 +14,8 @@ import (
 
 var (
 	_             oauth2.TokenStore = &TokenStore{}
-	jsonMarshal                     = jsoniter.Marshal
-	jsonUnmarshal                   = jsoniter.Unmarshal
+	JSONMarshal                     = jsoniter.Marshal
+	JSONUnmarshal                   = jsoniter.Unmarshal
 )
 
 // NewRedisStore create an instance of a redis store
@@ -148,7 +148,7 @@ func (s *TokenStore) parseToken(result *redis.StringCmd) (oauth2.TokenInfo, erro
 	}
 
 	var token models.Token
-	if err := jsonUnmarshal(buf, &token); err != nil {
+	if err := JSONUnmarshal(buf, &token); err != nil {
 		return nil, err
 	}
 	return &token, nil
@@ -176,7 +176,7 @@ func (s *TokenStore) getBasicID(ctx context.Context, token string) (string, erro
 // Create Create and store the new token information
 func (s *TokenStore) Create(ctx context.Context, info oauth2.TokenInfo) error {
 	ct := time.Now()
-	jv, err := jsonMarshal(info)
+	jv, err := JSONMarshal(info)
 	if err != nil {
 		return err
 	}
