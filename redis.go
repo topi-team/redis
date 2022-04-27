@@ -16,6 +16,7 @@ var (
 	_             oauth2.TokenStore = &TokenStore{}
 	JSONMarshal                     = jsoniter.Marshal
 	JSONUnmarshal                   = jsoniter.Unmarshal
+	EncodeKey                       = func(key string) string { return key }
 )
 
 // NewRedisStore create an instance of a redis store
@@ -78,7 +79,7 @@ func (s *TokenStore) Close() error {
 }
 
 func (s *TokenStore) wrapperKey(key string) string {
-	return fmt.Sprintf("%s%s", s.ns, key)
+	return fmt.Sprintf("%s%s", s.ns, EncodeKey(key))
 }
 
 func (s *TokenStore) checkError(result redis.Cmder) (bool, error) {
